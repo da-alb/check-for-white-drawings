@@ -101,11 +101,12 @@ The email subject will be "PDF con problemi per il giorno \[date]" (PDF issues f
     </table>
 </body>
 </html>
+```
 
-** TODO **
+**TODO**
 
-* Add an option to exclude certain subfolders.
-* Manually update the 'folder.path' in config.yaml each year.
-* Implement logging to a file for debugging purposes.
-* Improve error handling for incorrect SMTP credentials.
-* Allow configuration of the threshold for white image detection (currently set at 1200px width).
+*   Add an option to exclude certain subfolders.
+*   Manually update the 'folder.path' in config.yaml each year.
+*   Implement logging to a file for debugging purposes.
+*   Improve error handling for incorrect SMTP credentials.
+*   Allow configuration of the threshold for white image detection (currently set at 1200px width).
