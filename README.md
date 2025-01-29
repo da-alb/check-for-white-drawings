@@ -6,10 +6,12 @@ This Python script analyzes PDF files within a specified folder (including subfo
 2.  **PDFs smaller than 20 KB:** It flags PDF files that are smaller than 20 kilobytes, which might suggest incomplete or empty documents.
 
 **Project Structure:**
+```
 pdf_analyzer/
 ├── config.py
 ├── config.yaml
 └── main.py
+```
 **Key Features:**
 
 *   **Date Filtering:** The script processes only PDF files created on a specific date. The date is configurable via a `config.yaml` file and defaults to today's date.
