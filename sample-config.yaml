@@ -1,0 +1,17 @@
+email:
+  sender: "your_email@example.com"    # Replace with your email
+  recipient: "recipient_email@example.com"  # Replace with the recipient's email
+  cc:
+    - "cc_email1@example.com"       # Replace with CC email addresses
+    - "cc_email2@example.com"
+  smtp_server: "smtp.example.com"      # Replace with your SMTP server
+  smtp_port: 587                      # Replace with your SMTP port (usually 587 or 465)
+  smtp_password: "your_password"     # Replace with your email password
+
+folder:
+  path: "C:\\PDF"      # Replace with the folder to be analyzed.
+
+date_settings:
+  use_today: true                   # Use today's date
+  # specific_date: 2023-12-20      # Uncomment and set a specific date (use_today must be false)
+  # days_offset: -7                # Uncomment to use an offset from today (use_today must be false)

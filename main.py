@@ -1,4 +1,4 @@
-import fitz  # PyMuPDF
+import pymupdf
 from PIL import Image
 import io
 import os
@@ -7,7 +7,7 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import time
-from extras import sender_email, recipient_email, cc_emails, smtp_server, smtp_port, smtp_password, folder_path
+from config import load_config
 
 def is_white_image(image):
     # Check if an image is completely white and its width is larger than 1200px
@@ -47,7 +47,7 @@ def process_pdfs_in_folder(folder_path, target_date):
 
                 # Open the PDF and check for white images
 
-                doc = fitz.open(pdf_path)
+                doc = pymupdf.open(pdf_path)
                 has_large_white_image = False
 
                 for page_num in range(len(doc)):
@@ -73,6 +73,9 @@ def process_pdfs_in_folder(folder_path, target_date):
     return pdfs_with_white_images, small_size_pdfs
 
 def send_email_with_results(white_image_results, small_size_results, sender_email, recipient_email, cc_emails, smtp_server, smtp_port, smtp_password):
+    
+    global target_date
+
     # Send an email with the results in a table format and CC recipients
     # Create the email content
     message = MIMEMultipart()
@@ -115,7 +118,7 @@ def send_email_with_results(white_image_results, small_size_results, sender_emai
     """
     # Attach the HTML content to the email
     message.attach(MIMEText(html_content, "html"))
-
+    
     # Send the email
     all_recipients = [recipient_email] + cc_emails
     with smtplib.SMTP(smtp_server, smtp_port) as server:
@@ -125,12 +128,22 @@ def send_email_with_results(white_image_results, small_size_results, sender_emai
 
 # Main function
 if __name__ == "__main__":
-    
-    # Default behavior: process today's date
-    target_date = datetime.date.today()
+    #Load configuration
+    config = load_config()
+    if not config:
+        exit(1)  # Exit if configuration loading fails
 
-    # To specify a custom date for debugging, uncomment and set the date below:
-    ##target_date = datetime.date(2025, 1, 27)  # Example custom date
+    # Get settings from the config dictionary
+    sender_email = config['email']['sender']
+    recipient_email = config['email']['recipient']
+    cc_emails = config['email']['cc']
+    smtp_server = config['email']['smtp_server']
+    smtp_port = config['email']['smtp_port']
+    smtp_password = config['email']['smtp_password']
+    folder_path = config['folder']['path']
+    
+    # Get target_date from config
+    target_date = config.get('target_date', datetime.date.today())
 
     # Measure start time
     start_time = time.time()
